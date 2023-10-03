@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base{
+ button{ @apply p-1 bg-blue-500 text-white rounded-sm mr-1 ml-1}
+
+ input{
+    @apply border border-black rounded-md p-1;
+ }
+
+}
