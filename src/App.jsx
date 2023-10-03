@@ -13,8 +13,9 @@ function App() {
     }
     setInputComponentArray([...inputComponentArray, newInputObj])
   }
+  console.log(inputComponentArray)
   const [currValue, setCurrValue] = useState("")
-  const [submitIsClicked, setSubmitIsClicked] = useState(false);
+  const [submitIsClicked, setSubmitIsClicked] = useState(false)
   const [inputData, setInputData] = useState([])
   const handleInputDataChange = (value, label) => {
     const newObj = {
@@ -24,10 +25,12 @@ function App() {
     setInputData([...inputData, newObj])
   }
   const handleAddData = () => {
-    inputComponentArray.map((item,i) => {
+   const newArray= inputComponentArray.map((item, i) => {
       const dataObj = inputData[i]
+      console.log("In the handle data", dataObj)
       return { ...item, value: dataObj.value, label: dataObj.label }
     })
+    setInputComponentArray(newArray)
     setSubmitIsClicked(true)
   }
   const labelIsvalid = labelValue !== ""
@@ -53,7 +56,10 @@ function App() {
                 <label>{item.label}</label>
                 <input
                   type="text"
-                  onChange={(e) => handleInputDataChange(e.target.value, item.label)}
+                  onChange={(e) => {
+                    setCurrValue(e.target.value)
+                  }}
+                  onBlur={() => handleInputDataChange(currValue, item.label)}
                 />
               </div>
             )}
@@ -63,14 +69,22 @@ function App() {
                 <input
                   type="checkbox"
                   value={labelValue}
-                  onChange={(e) => handleInputDataChange(e.target.value, item.label)}
+                  onChange={(e) => {
+                    setCurrValue(e.target.value)
+                  }}
+                  onBlur={() => handleInputDataChange(currValue, item.label)}
                 />
               </div>
             )}
             {labelIsvalid && item.type === "select" && (
               <>
                 <label>{labelValue}</label>
-                <select onChange={(e) => handleInputDataChange(e.target.value, item.label)}>
+                <select
+                  onChange={(e) => {
+                    setCurrValue(e.target.value)
+                  }}
+                  onBlur={() => handleInputDataChange(currValue, item.label)}
+                >
                   <option value={"Option 1"}>Option 1</option>
                 </select>
               </>
